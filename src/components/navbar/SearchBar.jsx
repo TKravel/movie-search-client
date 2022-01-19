@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import { Button } from '../reusable/Button';
 import { Checkbox } from './Checkbox';
 import { NumberInput } from './NumberInput';
-import { RangeInput } from './RangeInput';
+import { RadioButton } from './RadioButton';
+// import { RangeInput } from './RangeInput';
 
-export const SearchBar = () => {
-	const [checkboxes, setCheckboxes] = useState({
+export const SearchBar = ({ liftData }) => {
+	const [provider, setProvider] = useState({
 		netflix: true,
-		prime: true,
+		prime: false,
 	});
-	const [startDate, setStartDate] = useState('');
 	const [dateRange, setDateRange] = useState({
 		startDate: '',
 		endDate: '2022',
 	});
-	const [rating, setRating] = useState(75);
+	// const [rating, setRating] = useState(75);
 	const [genreSelection, setGenreSelection] = useState({
 		action: false,
 		comedy: false,
@@ -27,16 +27,19 @@ export const SearchBar = () => {
 		western: false,
 	});
 
-	const handleCheckboxes = (e) => {
+	const handleProvider = (e) => {
 		const box = e.target.id;
-		const value = e.target.checked;
-		console.log('clicked');
-		setCheckboxes((prevValues) => {
-			return {
-				...prevValues,
-				[box]: value,
-			};
-		});
+		if (box === 'netflix') {
+			setProvider({
+				netflix: true,
+				prime: false,
+			});
+		} else {
+			setProvider({
+				netflix: false,
+				prime: true,
+			});
+		}
 	};
 
 	const handleDate = (e) => {
@@ -55,12 +58,12 @@ export const SearchBar = () => {
 		});
 	};
 
-	const handleRating = (e) => {
-		const value = e.target.value;
-		console.log(value);
+	// const handleRating = (e) => {
+	// 	const value = e.target.value;
+	// 	console.log(value);
 
-		setRating(value);
-	};
+	// 	setRating(value);
+	// };
 
 	const handleGenre = (e) => {
 		const box = e.target.id;
@@ -76,27 +79,30 @@ export const SearchBar = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(checkboxes, dateRange, rating, genreSelection);
+		console.log(provider, dateRange, genreSelection);
+		liftData(provider, dateRange, genreSelection);
 	};
 	return (
 		<nav>
 			<form onSubmit={handleSubmit}>
 				<h1>Movie search</h1>
-				<p>Provider</p>
-				<Checkbox
-					id='netflix'
-					name='netflix'
-					label='Netflix'
-					value={checkboxes.netflix}
-					onChange={handleCheckboxes}
-				/>
-				<Checkbox
-					id='prime'
-					name='prime'
-					label='Prime'
-					value={checkboxes.prime}
-					onChange={handleCheckboxes}
-				/>
+
+				<fieldset>
+					<legend>Provider</legend>
+					<RadioButton
+						id='netflix'
+						label='Netflix'
+						value={provider.netflix}
+						onChange={handleProvider}
+					/>
+					<RadioButton
+						id='prime'
+						label='Prime'
+						value={provider.prime}
+						onChange={handleProvider}
+					/>
+				</fieldset>
+
 				<div>
 					<NumberInput
 						id='startDate'
@@ -117,12 +123,12 @@ export const SearchBar = () => {
 						onChange={handleDate}
 					/>
 				</div>
-				<RangeInput
+				{/* <RangeInput
 					id='rating'
 					label='Rating'
 					value={rating}
 					onChange={handleRating}
-				/>
+				/> */}
 				<div id='genre-container'>
 					<Checkbox
 						id='action'
