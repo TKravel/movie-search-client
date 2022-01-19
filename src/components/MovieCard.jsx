@@ -3,8 +3,12 @@ import React, { useEffect, useState } from 'react';
 export const MovieCard = ({ movie }) => {
 	const [img, setImg] = useState(null);
 
-	const data = {
-		url: movie.posterURLs[500],
+	const truncate = (str) => {
+		if (str.length > 30) {
+			return str.substr(0, 100) + '...';
+		} else {
+			return str;
+		}
 	};
 
 	const getImg = async () => {
@@ -20,26 +24,28 @@ export const MovieCard = ({ movie }) => {
 	}, []);
 
 	return (
-		<div>
+		<div className='movie-card'>
 			<h2>{movie.title}</h2>
-			<div>
+			<div className='mid-card'>
 				<img src={img} alt={`${movie.title} +  'poster'`}></img>
 				<div>
 					<p>{movie.year}</p>
 					<p>{movie.runtime} mins</p>
 				</div>
+			</div>
+			<div>
 				<h3>{movie.tagline}</h3>
-				<p>{movie.overview}</p>
-				<div>
+				<p>{truncate(movie.overview)}</p>
+				<div className='bottom-card'>
 					<a
 						href={`https://www.youtube.com/watch?v=${movie.video}`}
 						target='_blank'
 						rel='noreferrer'
 					>
-						Trailer
+						Watch trailer
 					</a>
 					<p>
-						Rating: {movie.imdbRating} / votes:{' '}
+						Rating: {movie.imdbRating}% / Votes:{' '}
 						{movie.imdbVoteCount}
 					</p>
 				</div>
