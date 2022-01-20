@@ -1,6 +1,8 @@
-import { useEffect, useImperativeHandle } from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react/cjs/react.development';
 import './App.css';
+import { Footer } from './components/Footer';
+import { Modal } from './components/Modal';
 import { MovieCard } from './components/MovieCard';
 import { SearchBar } from './components/navbar/SearchBar';
 import { PaginationControls } from './components/PaginationControls';
@@ -10,6 +12,8 @@ function App() {
 	const [searchResults, setSearchResults] = useState(null);
 	const [totalPages, setTotalPages] = useState(0);
 	const [page, setPage] = useState(1);
+	const [modalOpened, setModalOpened] = useState(false);
+	const [modalData, setModalData] = useState(null);
 
 	const handlePage = (action) => {
 		console.log(action);
@@ -42,17 +46,31 @@ function App() {
 		}
 	};
 
-	const buildQuery = (provider, dateRange, genre) => {
-		const { netflix, prime } = provider;
+	const handleModal = () => {
+		setModalOpened(!modalOpened);
+	};
+
+	const buildQuery = (provider, dateRange, genre, sort) => {
+		const { netflix } = provider;
 		const { startDate, endDate } = dateRange;
+		const { title } = sort;
 		setSearchQuery({
 			provider: netflix ? 'netflix' : 'prime',
 			startDate: startDate === '' ? '1900' : startDate,
 			endDate: endDate,
 			genre: { ...genre },
+			sort: title ? 'original_title' : 'year',
 			page: page,
 		});
 	};
+
+	useEffect(() => {
+		if (modalOpened) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = 'unset';
+		}
+	}, [modalOpened]);
 
 	useEffect(() => {
 		console.log(searchQuery);
@@ -79,27 +97,51 @@ function App() {
 	}, [searchQuery]);
 
 	return (
-		<div className='App'>
-			<SearchBar liftData={buildQuery} />
-			{searchResults !== null && (
-				<PaginationControls
-					currentPage={page}
-					pageCount={totalPages}
-					changePage={handlePage}
-				/>
-			)}
-			{searchResults !== null
-				? searchResults.map((result) => {
-						return <MovieCard key={result.tmdbID} movie={result} />;
-				  })
-				: null}
-			{searchResults !== null && (
-				<PaginationControls
-					currentPage={page}
-					pageCount={totalPages}
-					changePage={handlePage}
-				/>
-			)}
+		<div id='app-wrapper'>
+			<div id='App'>
+				<SearchBar liftData={buildQuery} />
+				<div id='card-container'>
+					{!searchResults && (
+						<div id='start-msg'>
+							<h2>Start searching!</h2>
+						</div>
+					)}
+					{searchResults !== null && (
+						<PaginationControls
+							currentPage={page}
+							pageCount={totalPages}
+							changePage={handlePage}
+						/>
+					)}
+					{searchResults !== null
+						? searchResults.map((result) => {
+								return (
+									<MovieCard
+										key={result.tmdbID}
+										movie={result}
+										handleModalData={setModalData}
+										controlModal={handleModal}
+									/>
+								);
+						  })
+						: null}
+					{searchResults !== null && (
+						<PaginationControls
+							currentPage={page}
+							pageCount={totalPages}
+							changePage={handlePage}
+						/>
+					)}
+					{modalOpened && (
+						<Modal
+							movie={modalData}
+							isOpen={modalOpened}
+							handleModal={setModalOpened}
+						/>
+					)}
+				</div>
+			</div>
+			<Footer />
 		</div>
 	);
 }

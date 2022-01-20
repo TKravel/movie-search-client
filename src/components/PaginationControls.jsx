@@ -9,7 +9,7 @@ export const PaginationControls = ({ currentPage, pageCount, changePage }) => {
 		changePage(action);
 	};
 	return (
-		<div>
+		<div className='page-control-container'>
 			<Button id='prev' type='button' text='Prev' onClick={handleClick} />
 			<span>
 				Page {currentPage} of {pageCount}

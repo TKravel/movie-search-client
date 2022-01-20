@@ -2,7 +2,8 @@ import React from 'react';
 
 export const NumberInput = ({ id, label, min, max, value, onChange }) => {
 	return (
-		<label htmlFor='id'>
+		<label htmlFor='id' className='num-input-flexbox'>
+			{label}
 			<input
 				id={id}
 				name={id}
@@ -13,7 +14,6 @@ export const NumberInput = ({ id, label, min, max, value, onChange }) => {
 				value={value}
 				onChange={onChange}
 			/>
-			{label}
 		</label>
 	);
 };

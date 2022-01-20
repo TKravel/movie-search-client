@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Checkbox = ({ id, label, value, onChange }) => {
 	return (
-		<div>
+		<div className='checkbox-wrapper'>
 			<label htmlFor={id}>
 				<input
 					type='checkbox'

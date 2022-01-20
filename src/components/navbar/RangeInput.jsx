@@ -4,6 +4,7 @@ export const RangeInput = ({ id, label, value, onChange }) => {
 	return (
 		<div>
 			<label htmlFor={id}>
+				{label} <span> above {value}%</span>
 				<input
 					id={id}
 					name={id}
@@ -11,7 +12,6 @@ export const RangeInput = ({ id, label, value, onChange }) => {
 					value={value}
 					onChange={onChange}
 				/>
-				{label} <span> above {value}%</span>
 			</label>
 		</div>
 	);

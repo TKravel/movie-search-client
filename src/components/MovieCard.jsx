@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from './reusable/Button';
 
-export const MovieCard = ({ movie }) => {
+export const MovieCard = ({ movie, handleModalData, controlModal }) => {
 	const [img, setImg] = useState(null);
 
 	const truncate = (str) => {
 		if (str.length > 30) {
-			return str.substr(0, 100) + '...';
+			return str.substr(0, 200) + '...';
 		} else {
 			return str;
 		}
 	};
 
 	const getImg = async () => {
-		const res = await fetch(`${movie.posterURLs[185]}`);
+		const res = await fetch(`${movie.posterURLs[154]}`);
 		const imgBlob = await res.blob();
 		const imageObjectURL = URL.createObjectURL(imgBlob);
 		setImg(imageObjectURL);
+	};
+
+	const setModalData = () => {
+		handleModalData(movie);
+		controlModal();
 	};
 
 	useEffect(() => {
@@ -25,29 +31,43 @@ export const MovieCard = ({ movie }) => {
 
 	return (
 		<div className='movie-card'>
-			<h2>{movie.title}</h2>
+			<h2 className='movie-title'>{movie.title}</h2>
 			<div className='mid-card'>
-				<img src={img} alt={`${movie.title} +  'poster'`}></img>
-				<div>
-					<p>{movie.year}</p>
-					<p>{movie.runtime} mins</p>
+				<img
+					className='movie-poster'
+					src={img}
+					alt={`${movie.title} +  'poster'`}
+				></img>
+				<div className='mid-card-info'>
+					<div>
+						<p className='movie-date'>{movie.year}</p>
+						<p className='movie-length'>{movie.runtime} mins</p>
+					</div>
+					<div>
+						<p className='movie-rating'>
+							Rating: {movie.imdbRating}%
+						</p>
+						<p>Votes: {movie.imdbVoteCount}</p>
+					</div>
 				</div>
 			</div>
 			<div>
-				<h3>{movie.tagline}</h3>
 				<p>{truncate(movie.overview)}</p>
 				<div className='bottom-card'>
 					<a
+						className='movie-link'
 						href={`https://www.youtube.com/watch?v=${movie.video}`}
 						target='_blank'
 						rel='noreferrer'
 					>
 						Watch trailer
 					</a>
-					<p>
-						Rating: {movie.imdbRating}% / Votes:{' '}
-						{movie.imdbVoteCount}
-					</p>
+					<Button
+						id='read-more'
+						type='button'
+						text='Read more...'
+						onClick={setModalData}
+					/>
 				</div>
 			</div>
 		</div>
