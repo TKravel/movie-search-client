@@ -13,6 +13,7 @@ function App() {
 	const [page, setPage] = useState(1);
 	const [modalOpened, setModalOpened] = useState(false);
 	const [modalData, setModalData] = useState(null);
+	const [isSearching, setIsSearching] = useState(false);
 
 	const handlePage = (action) => {
 		console.log(action);
@@ -20,26 +21,26 @@ function App() {
 		console.log(totalPages);
 		if (action === 'prev') {
 			if (page !== 1) {
-				setPage((prevValue) => {
-					return prevValue - 1;
-				});
 				setSearchQuery((prevValues) => {
 					return {
 						...prevValues,
-						page: page,
+						page: page - 1,
 					};
+				});
+				setPage((prevValue) => {
+					return prevValue - 1;
 				});
 			}
 		} else if (action === 'next') {
 			if (page !== totalPages) {
-				setPage((prevValue) => {
-					return prevValue + 1;
-				});
 				setSearchQuery((prevValues) => {
 					return {
 						...prevValues,
-						page: page,
+						page: page + 1,
 					};
+				});
+				setPage((prevValue) => {
+					return prevValue + 1;
 				});
 			}
 		}
@@ -53,14 +54,16 @@ function App() {
 		const { netflix } = provider;
 		const { startDate, endDate } = dateRange;
 		const { title } = sort;
+		setSearchResults(null);
 		setSearchQuery({
 			provider: netflix ? 'netflix' : 'prime',
 			startDate: startDate === '' ? '1900' : startDate,
 			endDate: endDate,
-			genre: { ...genre },
+			genre: genre,
 			sort: title ? 'original_title' : 'year',
 			page: page,
 		});
+		setIsSearching(true);
 	};
 
 	useEffect(() => {
@@ -76,7 +79,7 @@ function App() {
 		if (searchQuery === null) {
 			return;
 		}
-		fetch(`${process.env.REACT_APP_SERVER}/search`, {
+		fetch(`http://localhost:3001/search`, {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',
@@ -88,6 +91,7 @@ function App() {
 				if (data.docs && data.count) {
 					setSearchResults(data.docs);
 					setTotalPages(data.count);
+					setIsSearching(false);
 				}
 			})
 			.catch((err) => {
@@ -100,10 +104,13 @@ function App() {
 			<div id='App'>
 				<SearchBar liftData={buildQuery} />
 				<div id='card-container'>
-					{!searchResults && (
+					{!searchResults && !isSearching ? (
 						<div id='start-msg'>
 							<h2>Start searching!</h2>
 						</div>
+					) : null}
+					{isSearching && (
+						<h2>Looking for {searchQuery.genre} movies</h2>
 					)}
 					{searchResults !== null && (
 						<PaginationControls

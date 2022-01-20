@@ -47,6 +47,7 @@ body {
 	flex-direction: column;
 	justify-content: start;
 	align-items: center;
+	min-height: calc(100vh - 60px);
 	width: 200px;
 	padding: 0.5em;
 }
@@ -72,7 +73,7 @@ fieldset {
 	width: 100%;
 }
 
-input[type='checkbox'] {
+input[type='radio'] {
 	margin-right: 0.5em;
 }
 
@@ -81,6 +82,7 @@ input[type='checkbox'] {
 		flex-direction: row;
 		flex-wrap: wrap;
 		margin-bottom: 2em;
+		min-height: auto;
 		width: 100vw;
 	}
 	form {
@@ -110,7 +112,7 @@ input[type='checkbox'] {
 		flex-wrap: wrap;
 		width: 100%;
 	}
-	.checkbox-wrapper {
+	.radio-wrapper {
 		width: 25vw;
 		margin: auto;
 	}

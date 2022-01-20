@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button } from '../reusable/Button';
-import { Checkbox } from './Checkbox';
 import { NumberInput } from './NumberInput';
 import { RadioButton } from './RadioButton';
 // import { RangeInput } from './RangeInput';
@@ -15,17 +14,7 @@ export const SearchBar = ({ liftData }) => {
 		endDate: '2022',
 	});
 	// const [rating, setRating] = useState(75);
-	const [genreSelection, setGenreSelection] = useState({
-		action: false,
-		comedy: false,
-		drama: false,
-		fantasy: false,
-		horror: false,
-		mystery: false,
-		romance: false,
-		thriller: false,
-		western: false,
-	});
+	const [genreSelection, setGenreSelection] = useState('action');
 
 	const [sort, setSort] = useState({
 		title: true,
@@ -71,15 +60,9 @@ export const SearchBar = ({ liftData }) => {
 	// };
 
 	const handleGenre = (e) => {
-		const box = e.target.id;
-		const value = e.target.checked;
+		const selection = e.target.id;
 
-		setGenreSelection((prevValues) => {
-			return {
-				...prevValues,
-				[box]: value,
-			};
-		});
+		setGenreSelection(selection);
 	};
 
 	const handleSort = (e) => {
@@ -152,58 +135,60 @@ export const SearchBar = ({ liftData }) => {
 				<fieldset id='fieldset-genres'>
 					<legend>Genre</legend>
 					<div id='genre-container'>
-						<Checkbox
+						<RadioButton
 							id='action'
 							label='Action'
-							value={genreSelection.action}
+							value={genreSelection === 'action' ? true : false}
 							onChange={handleGenre}
 						/>
-						<Checkbox
+						<RadioButton
 							id='comedy'
 							label='Comedy'
-							value={genreSelection.comedy}
+							value={genreSelection === 'comedy' ? true : false}
 							onChange={handleGenre}
 						/>
-						<Checkbox
+						<RadioButton
 							id='drama'
 							label='Drama'
-							value={genreSelection.drama}
+							value={genreSelection === 'drama' ? true : false}
 							onChange={handleGenre}
 						/>
-						<Checkbox
+						<RadioButton
 							id='fantasy'
 							label='Fantasy'
-							value={genreSelection.fantasy}
+							value={genreSelection === 'fantasy' ? true : false}
 							onChange={handleGenre}
 						/>
-						<Checkbox
+						<RadioButton
 							id='horror'
 							label='Horror'
-							value={genreSelection.horror}
+							value={
+								genreSelection === 'horror' ? 'fantasy' : false
+							}
 							onChange={handleGenre}
 						/>
-						<Checkbox
+						<RadioButton
 							id='mystery'
 							label='Mystery'
-							value={genreSelection.mystery}
+							value={genreSelection === 'mystery' ? true : false}
 							onChange={handleGenre}
 						/>
-						<Checkbox
+						<RadioButton
 							id='romance'
 							label='Romance'
-							value={genreSelection.romance}
+							value={genreSelection === 'romance' ? true : false}
 							onChange={handleGenre}
 						/>
-						<Checkbox
+						<RadioButton
 							id='thriller'
 							label='Thriller'
-							value={genreSelection.Thriller}
+							value={genreSelection === 'thriller' ? true : false}
 							onChange={handleGenre}
 						/>
-						<Checkbox
+						<RadioButton
 							id='western'
 							label='Western'
-							value={genreSelection.western}
+							value={genreSelection === 'western' ? true : false}
 							onChange={handleGenre}
 						/>
 					</div>
