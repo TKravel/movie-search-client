@@ -55,13 +55,14 @@ function App() {
 		const { startDate, endDate } = dateRange;
 		const { title } = sort;
 		setSearchResults(null);
+		setPage(1);
 		setSearchQuery({
 			provider: netflix ? 'netflix' : 'prime',
 			startDate: startDate === '' ? '1900' : startDate,
 			endDate: endDate,
 			genre: genre,
 			sort: title ? 'original_title' : 'year',
-			page: page,
+			page: 1,
 		});
 		setIsSearching(true);
 	};
