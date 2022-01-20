@@ -76,7 +76,7 @@ function App() {
 		if (searchQuery === null) {
 			return;
 		}
-		fetch(`process.env.REACT_APP_SERVER`, {
+		fetch(`${process.env.REACT_APP_SERVER}`, {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',
