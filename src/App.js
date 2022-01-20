@@ -79,7 +79,7 @@ function App() {
 		if (searchQuery === null) {
 			return;
 		}
-		fetch(`http://localhost:3001/search`, {
+		fetch(`${process.env.REACT_APP_SERVER}/search`, {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',
