@@ -42,7 +42,7 @@ body {
 
 #nav {
 	background-color: #bf0603;
-	color: rgb(255, 200, 200);
+	color: #ffc8c8;
 	display: flex;
 	flex-direction: column;
 	justify-content: start;
@@ -63,7 +63,7 @@ fieldset {
 }
 
 #search-button {
-	color: #708d81;
+	color: #c9c8ff;
 	background-color: #001427;
 	border: 1px solid #001427;
 	border-radius: 0.2em;
@@ -123,6 +123,46 @@ input[type='radio'] {
 	}
 }
 
+/* spinner */
+#loading-msg {
+	text-align: center;
+}
+#search-spinner {
+	align-self: center;
+	animation: searchSpinner 2s infinite;
+	fill: #8d0801;
+	height: 5em;
+	width: 5em;
+	margin-top: 2em;
+}
+
+@keyframes searchSpinner {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+#page-update-spinner {
+	align-self: center;
+	animation: pageSpinner 2s infinite;
+	fill: #8d0801;
+	height: 3em;
+	width: 3em;
+	margin-top: 1em;
+}
+
+@keyframes pageSpinner {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
 /* movie card */
 
 #card-container {
@@ -136,7 +176,7 @@ input[type='radio'] {
 
 .page-control-container {
 	width: 100%;
-	text-align: right;
+	text-align: center;
 }
 
 #prev {
@@ -243,7 +283,7 @@ input[type='radio'] {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	background-color: #00142773;
+	background-color: #001427a8;
 	z-index: 0;
 }
 

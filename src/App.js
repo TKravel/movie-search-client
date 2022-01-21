@@ -5,6 +5,7 @@ import { Modal } from './components/Modal';
 import { MovieCard } from './components/MovieCard';
 import { SearchBar } from './components/navbar/SearchBar';
 import { PaginationControls } from './components/PaginationControls';
+import { Spinner } from './components/icons/Spinner';
 
 function App() {
 	const [searchQuery, setSearchQuery] = useState(null);
@@ -14,11 +15,9 @@ function App() {
 	const [modalOpened, setModalOpened] = useState(false);
 	const [modalData, setModalData] = useState(null);
 	const [isSearching, setIsSearching] = useState(false);
+	const [loadingNewPage, setLoadingNewPage] = useState(false);
 
 	const handlePage = (action) => {
-		console.log(action);
-		console.log(page);
-		console.log(totalPages);
 		if (action === 'prev') {
 			if (page !== 1) {
 				setSearchQuery((prevValues) => {
@@ -44,6 +43,7 @@ function App() {
 				});
 			}
 		}
+		setLoadingNewPage(true);
 	};
 
 	const handleModal = () => {
@@ -93,6 +93,7 @@ function App() {
 					setSearchResults(data.docs);
 					setTotalPages(data.count);
 					setIsSearching(false);
+					setLoadingNewPage(false);
 				}
 			})
 			.catch((err) => {
@@ -111,13 +112,17 @@ function App() {
 						</div>
 					) : null}
 					{isSearching && (
-						<h2>Looking for {searchQuery.genre} movies</h2>
+						<div id='loading-msg'>
+							<h2>Looking for {searchQuery.genre} movies...</h2>
+							<Spinner id='search-spinner' />
+						</div>
 					)}
 					{searchResults !== null && (
 						<PaginationControls
 							currentPage={page}
 							pageCount={totalPages}
 							changePage={handlePage}
+							fetchingNewPage={loadingNewPage}
 						/>
 					)}
 					{searchResults !== null
@@ -137,6 +142,8 @@ function App() {
 							currentPage={page}
 							pageCount={totalPages}
 							changePage={handlePage}
+							loadingPage={loadingNewPage}
+							setLoadingPage={setLoadingNewPage}
 						/>
 					)}
 					{modalOpened && (
