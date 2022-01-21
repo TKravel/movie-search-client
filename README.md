@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# Movie app client code
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A streaming availability app built with React.js. Search for movies on Netflix or Prime Video while filtering results by year range and genre.
 
-## Available Scripts
+## Server code
 
-In the project directory, you can run:
+To protect the API key requests are forwarded from a Express server. Server code can be found at https://github.com/TKravel/movie-search-server
 
-### `npm start`
+## Requirements
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Client and server code installed
+2. Rapid API account (https://rapidapi.com)
+3. Streaming Availability API Pro subscription (https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability)
+   ..1. Streaming Availability API key
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+Clone this repository. From the root of the directory run:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm install
+npm start
+```
 
-### `npm run build`
+Create a .env file in the clients root directory with the following variable
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```javascript
+REACT_APP_SERVER = 'The URL from where the backend is being served from';
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Clone the server repository the from the root of the directory run:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm install
+```
 
-### `npm run eject`
+Create a .dotenv file in the server root directory
+Follow the server README to set up enivorment variables then run:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+node index.js
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Demo
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+A working demo can be found at https://jovial-goldwasser-b2768b.netlify.app
