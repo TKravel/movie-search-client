@@ -78,7 +78,6 @@ function App() {
 	// }, [modalOpened]);
 
 	useEffect(() => {
-		console.log(searchQuery);
 		if (searchQuery === null) {
 			return;
 		}
