@@ -18,8 +18,10 @@ function App() {
 	const [loadingNewPage, setLoadingNewPage] = useState(false);
 
 	const handlePage = (action) => {
+		console.log(action);
 		if (action === 'prev') {
 			if (page !== 1) {
+				setLoadingNewPage(true);
 				setSearchQuery((prevValues) => {
 					return {
 						...prevValues,
@@ -32,6 +34,7 @@ function App() {
 			}
 		} else if (action === 'next') {
 			if (page !== totalPages) {
+				setLoadingNewPage(true);
 				setSearchQuery((prevValues) => {
 					return {
 						...prevValues,
@@ -43,7 +46,6 @@ function App() {
 				});
 			}
 		}
-		setLoadingNewPage(true);
 	};
 
 	const handleModal = () => {
@@ -67,13 +69,13 @@ function App() {
 		setIsSearching(true);
 	};
 
-	useEffect(() => {
-		if (modalOpened) {
-			document.body.style.overflow = 'hidden';
-		} else {
-			document.body.style.overflow = 'unset';
-		}
-	}, [modalOpened]);
+	// useEffect(() => {
+	// 	if (modalOpened) {
+	// 		document.body.style.overflow = 'hidden';
+	// 	} else {
+	// 		document.body.style.overflow = 'unset';
+	// 	}
+	// }, [modalOpened]);
 
 	useEffect(() => {
 		console.log(searchQuery);
@@ -118,15 +120,14 @@ function App() {
 						</div>
 					)}
 					{searchResults !== null && (
-						<PaginationControls
-							currentPage={page}
-							pageCount={totalPages}
-							changePage={handlePage}
-							fetchingNewPage={loadingNewPage}
-						/>
-					)}
-					{searchResults !== null
-						? searchResults.map((result) => {
+						<>
+							<PaginationControls
+								currentPage={page}
+								pageCount={totalPages}
+								changePage={handlePage}
+								fetchingNewPage={loadingNewPage}
+							/>
+							{searchResults.map((result) => {
 								return (
 									<MovieCard
 										key={result.tmdbID}
@@ -135,16 +136,15 @@ function App() {
 										controlModal={handleModal}
 									/>
 								);
-						  })
-						: null}
-					{searchResults !== null && (
-						<PaginationControls
-							currentPage={page}
-							pageCount={totalPages}
-							changePage={handlePage}
-							loadingPage={loadingNewPage}
-							setLoadingPage={setLoadingNewPage}
-						/>
+							})}
+							<PaginationControls
+								currentPage={page}
+								pageCount={totalPages}
+								changePage={handlePage}
+								loadingPage={loadingNewPage}
+								setLoadingPage={setLoadingNewPage}
+							/>
+						</>
 					)}
 					{modalOpened && (
 						<Modal

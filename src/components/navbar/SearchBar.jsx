@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button } from '../reusable/Button';
 import { NumberInput } from './NumberInput';
 import { RadioButton } from './RadioButton';
-// import { RangeInput } from './RangeInput';
 
 export const SearchBar = ({ liftData }) => {
 	const [provider, setProvider] = useState({
@@ -13,9 +12,7 @@ export const SearchBar = ({ liftData }) => {
 		startDate: '',
 		endDate: '2022',
 	});
-	// const [rating, setRating] = useState(75);
-	const [genreSelection, setGenreSelection] = useState('action');
-
+	const [genreSelection, setGenreSelection] = useState('all');
 	const [sort, setSort] = useState({
 		title: true,
 		year: false,
@@ -51,13 +48,6 @@ export const SearchBar = ({ liftData }) => {
 			};
 		});
 	};
-
-	// const handleRating = (e) => {
-	// 	const value = e.target.value;
-	// 	console.log(value);
-
-	// 	setRating(value);
-	// };
 
 	const handleGenre = (e) => {
 		const selection = e.target.id;
@@ -136,6 +126,12 @@ export const SearchBar = ({ liftData }) => {
 					<legend>Genre</legend>
 					<div id='genre-container'>
 						<RadioButton
+							id='all'
+							label='All'
+							value={genreSelection === 'all' ? true : false}
+							onChange={handleGenre}
+						/>
+						<RadioButton
 							id='action'
 							label='Action'
 							value={genreSelection === 'action' ? true : false}
@@ -183,12 +179,6 @@ export const SearchBar = ({ liftData }) => {
 							id='thriller'
 							label='Thriller'
 							value={genreSelection === 'thriller' ? true : false}
-							onChange={handleGenre}
-						/>
-						<RadioButton
-							id='western'
-							label='Western'
-							value={genreSelection === 'western' ? true : false}
 							onChange={handleGenre}
 						/>
 					</div>

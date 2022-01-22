@@ -3,6 +3,9 @@ import { Button } from './reusable/Button';
 
 export const MovieCard = ({ movie, handleModalData, controlModal }) => {
 	const [img, setImg] = useState(null);
+	let languageNames = new Intl.DisplayNames(['en'], { type: 'language' });
+
+	const language = languageNames.of(movie.originalLanguage);
 
 	const truncate = (str) => {
 		if (str.length > 30) {
@@ -42,6 +45,9 @@ export const MovieCard = ({ movie, handleModalData, controlModal }) => {
 					<div>
 						<p className='movie-date'>{movie.year}</p>
 						<p className='movie-length'>{movie.runtime} mins</p>
+					</div>
+					<div>
+						<p>Language: {language}</p>
 					</div>
 					<div>
 						<p className='movie-rating'>
