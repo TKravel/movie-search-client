@@ -61,6 +61,7 @@ body {
 
 .button {
 	color: #708d81;
+	cursor: pointer;
 	background-color: #001427;
 	border: 1px solid #001427;
 	border-radius: 0.2em;
@@ -71,7 +72,7 @@ body {
 
 #nav {
 	background-color: #bf0603;
-	color: #ffc8c8;
+	color: #fcf1f1;
 	display: flex;
 	flex-direction: column;
 	justify-content: start;
@@ -104,6 +105,39 @@ fieldset {
 
 input[type='radio'] {
 	margin-right: 0.5em;
+}
+input[type='number'] {
+	background-color: #fff;
+	border: none;
+	border-radius: 0.2em;
+	color: #000;
+	text-align: center;
+	width: 3em;
+}
+
+input[type='number']::placeholder {
+	color: #000;
+	opacity: 0.5;
+}
+
+input[type='number']:focus {
+	outline: none;
+	border-left: none;
+	border-top: none;
+	border-right: none;
+	border-bottom: 1px solid #000;
+}
+
+/* remove number stepper Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* remove number stepper Firefox */
+input[type='number'] {
+	-moz-appearance: textfield;
 }
 
 @media screen and (max-width: 500px) {
@@ -153,7 +187,7 @@ input[type='radio'] {
 }
 
 /* spinner */
-#loading-msg {
+.display-msg {
 	text-align: center;
 }
 #search-spinner {

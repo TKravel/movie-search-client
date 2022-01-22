@@ -5,7 +5,8 @@ import { Modal } from './components/Modal';
 import { MovieCard } from './components/MovieCard';
 import { SearchBar } from './components/navbar/SearchBar';
 import { PaginationControls } from './components/PaginationControls';
-import { Spinner } from './components/icons/Spinner';
+import { ErrorMsg } from './components/ErrorMsg';
+import { SearchMsg } from './components/SearchMsg';
 
 function App() {
 	const [searchQuery, setSearchQuery] = useState(null);
@@ -16,9 +17,9 @@ function App() {
 	const [modalData, setModalData] = useState(null);
 	const [isSearching, setIsSearching] = useState(false);
 	const [loadingNewPage, setLoadingNewPage] = useState(false);
+	const [errors, setErrors] = useState(null);
 
 	const handlePage = (action) => {
-		console.log(action);
 		if (action === 'prev') {
 			if (page !== 1) {
 				setLoadingNewPage(true);
@@ -57,6 +58,7 @@ function App() {
 		const { startDate, endDate } = dateRange;
 		const { title } = sort;
 		setSearchResults(null);
+		setErrors(null);
 		setPage(1);
 		setSearchQuery({
 			provider: netflix ? 'netflix' : 'prime',
@@ -90,7 +92,13 @@ function App() {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				if (data.docs && data.count) {
+				setIsSearching(false);
+				if (data.err) {
+					console.log(data.err);
+					setErrors({ error: true, msg: data.err });
+				} else if (data.docs.length === 0) {
+					setErrors({ results: true });
+				} else if (data.docs && data.count) {
 					setSearchResults(data.docs);
 					setTotalPages(data.count);
 					setIsSearching(false);
@@ -99,6 +107,7 @@ function App() {
 			})
 			.catch((err) => {
 				console.log(err);
+				setErrors({ error: true, msg: Error.message });
 			});
 	}, [searchQuery]);
 
@@ -107,7 +116,7 @@ function App() {
 			<div id='App'>
 				<SearchBar liftData={buildQuery} />
 				<div id='card-container'>
-					{!searchResults && !isSearching ? (
+					{/* {!searchResults && !isSearching ? (
 						<div id='start-msg'>
 							<h2>Start searching!</h2>
 						</div>
@@ -117,7 +126,14 @@ function App() {
 							<h2>Looking for {searchQuery.genre} movies...</h2>
 							<Spinner id='search-spinner' />
 						</div>
-					)}
+					)} */}
+					<SearchMsg
+						searching={isSearching}
+						query={searchQuery}
+						results={searchResults}
+						error={errors}
+					/>
+					<ErrorMsg error={errors} />
 					{searchResults !== null && (
 						<>
 							<PaginationControls

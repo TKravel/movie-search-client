@@ -72,9 +72,9 @@ export const SearchBar = ({ liftData }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(provider, dateRange, genreSelection);
 		liftData(provider, dateRange, genreSelection, sort);
 	};
+
 	return (
 		<nav id='nav'>
 			<form id='nav-form' onSubmit={handleSubmit}>

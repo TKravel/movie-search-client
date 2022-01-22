@@ -25,7 +25,6 @@ export const MovieCard = ({ movie, handleModalData, controlModal }) => {
 	};
 
 	useEffect(() => {
-		console.log('useEffeect ran');
 		getImg();
 	}, []);
 
