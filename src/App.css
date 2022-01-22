@@ -306,6 +306,24 @@ input[type='number'] {
 	height: 231px;
 }
 
+.missing-movie-poster {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	background-color: #dcdcdc;
+	border-radius: 1em;
+	height: 231px;
+	text-align: center;
+	width: 154px;
+}
+
+#missing-icon {
+	fill: #8d0801;
+	height: 50px;
+	width: 50px;
+}
+
 .mid-card-info {
 	display: flex;
 	flex-direction: column;

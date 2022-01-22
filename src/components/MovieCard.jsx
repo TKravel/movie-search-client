@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { AlertIcon } from './icons/AlertIcon';
 import { Button } from './reusable/Button';
 
 export const MovieCard = ({ movie, handleModalData, controlModal }) => {
@@ -13,10 +14,19 @@ export const MovieCard = ({ movie, handleModalData, controlModal }) => {
 	};
 
 	const getImg = async () => {
-		const res = await fetch(`${movie.posterURLs[154]}`);
-		const imgBlob = await res.blob();
-		const imageObjectURL = URL.createObjectURL(imgBlob);
-		setImg(imageObjectURL);
+		try {
+			const res = await fetch(`${movie.posterURLs[154]}`);
+			if (res.status !== 200) {
+				return setImg(null);
+			}
+			const imgBlob = await res.blob();
+			const imageObjectURL = URL.createObjectURL(imgBlob);
+			setImg(imageObjectURL);
+		} catch (err) {
+			if (err) {
+				setImg(null);
+			}
+		}
 	};
 
 	const setModalData = () => {
@@ -32,11 +42,24 @@ export const MovieCard = ({ movie, handleModalData, controlModal }) => {
 		<div className='movie-card'>
 			<h2 className='movie-title'>{movie.title}</h2>
 			<div className='mid-card'>
-				<img
-					className='movie-poster'
-					src={img}
-					alt={movie.title + ' movie poster'}
-				></img>
+				{img !== null ? (
+					<img
+						className='movie-poster'
+						src={img}
+						alt={movie.title + ' movie poster'}
+					></img>
+				) : (
+					<div className='missing-movie-poster'>
+						<p>
+							<strong>Oops!</strong>
+						</p>
+						<AlertIcon id='missing-icon' />
+						<p>
+							We're having trouble finding that poster right now
+						</p>
+					</div>
+				)}
+
 				<div className='mid-card-info'>
 					<div>
 						<p className='movie-date'>{movie.year}</p>

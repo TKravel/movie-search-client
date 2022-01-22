@@ -116,17 +116,6 @@ function App() {
 			<div id='App'>
 				<SearchBar liftData={buildQuery} />
 				<div id='card-container'>
-					{/* {!searchResults && !isSearching ? (
-						<div id='start-msg'>
-							<h2>Start searching!</h2>
-						</div>
-					) : null}
-					{isSearching && (
-						<div id='loading-msg'>
-							<h2>Looking for {searchQuery.genre} movies...</h2>
-							<Spinner id='search-spinner' />
-						</div>
-					)} */}
 					<SearchMsg
 						searching={isSearching}
 						query={searchQuery}
