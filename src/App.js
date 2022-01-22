@@ -69,13 +69,13 @@ function App() {
 		setIsSearching(true);
 	};
 
-	// useEffect(() => {
-	// 	if (modalOpened) {
-	// 		document.body.style.overflow = 'hidden';
-	// 	} else {
-	// 		document.body.style.overflow = 'unset';
-	// 	}
-	// }, [modalOpened]);
+	useEffect(() => {
+		if (modalOpened) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = 'unset';
+		}
+	}, [modalOpened]);
 
 	useEffect(() => {
 		if (searchQuery === null) {
